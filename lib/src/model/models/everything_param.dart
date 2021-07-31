@@ -15,13 +15,14 @@ class EveryThingParams {
     this.language,
     this.sortBy,
     this.pageSize,
-    this.page,
-  }) : assert(
+    required this.page,
+  })  : assert(
             (q ?? '').trim().isNotEmpty ||
                 (qInTitle ?? '').trim().isNotEmpty ||
                 (sources ?? '').trim().isNotEmpty ||
                 (domains ?? '').trim().isNotEmpty,
-            'Required parameters are missing');
+            'Required parameters are missing'),
+        assert(page > 0, 'The page parameter cannot be less than 1.');
   factory EveryThingParams.fromJson(Map<String, dynamic> json) =>
       _$EveryThingParamsFromJson(json);
   Map<String, dynamic> toJson() => _$EveryThingParamsToJson(this);
@@ -63,5 +64,5 @@ class EveryThingParams {
   final int? pageSize;
 
   /// Use this to page through the results.
-  final int? page;
+  final int page;
 }

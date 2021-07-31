@@ -5,6 +5,8 @@ import 'package:mockito/mockito.dart';
 import 'package:newsapi_flutter/src/core/error/exceptions.dart';
 import 'package:newsapi_flutter/src/model/data_sources/articles_remote_data_source.dart';
 import 'package:newsapi_flutter/src/model/models/articles_response.dart';
+import 'package:newsapi_flutter/src/model/models/everything_param.dart';
+import 'package:newsapi_flutter/src/model/models/headlines_param.dart';
 import 'package:newsapi_flutter/src/model/repository/articles_repository.dart';
 
 import 'articles_repository_test.mocks.dart';
@@ -27,7 +29,8 @@ void main() {
           totalResults: 0,
         ),
       );
-      final result = await articlesRepository.getTopHeadlines(page: 1);
+      final params = HeadLinesParams(page: 1);
+      final result = await articlesRepository.getTopHeadlines(params);
       expect(result.isRight(), isTrue);
     });
     test('fetch top headlines should be failed because invalid page params',
@@ -39,21 +42,25 @@ void main() {
           totalResults: 0,
         ),
       );
-      expect(() async => await articlesRepository.getTopHeadlines(page: 0),
+      expect(
+          () async => await articlesRepository
+              .getTopHeadlines(HeadLinesParams(page: 0)),
           throwsAssertionError);
     });
     test('fetch top headlines should be failed because server return error',
         () async {
       when(mockArticlesRemoteDataSource.fetchHeadlines(any))
           .thenThrow(ServerException());
-      final result = await articlesRepository.getTopHeadlines(page: 1);
+      final params = HeadLinesParams(page: 1);
+      final result = await articlesRepository.getTopHeadlines(params);
       expect(result.isLeft(), isTrue);
     });
     test('fetch top headlines should be failed because unexpected error',
         () async {
       when(mockArticlesRemoteDataSource.fetchHeadlines(any))
           .thenThrow(Exception());
-      final result = await articlesRepository.getTopHeadlines(page: 1);
+      final HeadLinesParams params = HeadLinesParams(page: 1);
+      final result = await articlesRepository.getTopHeadlines(params);
       expect(result.isLeft(), isTrue);
     });
   });
@@ -66,8 +73,8 @@ void main() {
           totalResults: 0,
         ),
       );
-      final result =
-          await articlesRepository.getEverything(page: 1, query: 'a');
+      final EveryThingParams params = EveryThingParams(page: 1, q: 'a');
+      final result = await articlesRepository.getEverything(params);
       expect(result.isRight(), isTrue);
     });
     test('fetch everything should be failed because invalid page params',
@@ -80,24 +87,24 @@ void main() {
         ),
       );
       expect(
-          () async =>
-              await articlesRepository.getEverything(page: 0, query: 'a'),
+          () async => await articlesRepository
+              .getEverything(EveryThingParams(page: 0, q: 'a')),
           throwsAssertionError);
     });
     test('fetch everything should be failed because server return error',
         () async {
       when(mockArticlesRemoteDataSource.fetchEverything(any))
           .thenThrow(ServerException());
-      final result =
-          await articlesRepository.getEverything(page: 1, query: 'a');
+      final EveryThingParams params = EveryThingParams(page: 1, q: 'a');
+      final result = await articlesRepository.getEverything(params);
       expect(result.isLeft(), isTrue);
     });
     test('fetch everything should be failed because unexpected error',
         () async {
       when(mockArticlesRemoteDataSource.fetchEverything(any))
           .thenThrow(Exception());
-      final result =
-          await articlesRepository.getEverything(page: 1, query: 'a');
+      final EveryThingParams params = EveryThingParams(page: 1, q: 'a');
+      final result = await articlesRepository.getEverything(params);
       expect(result.isLeft(), isTrue);
     });
   });

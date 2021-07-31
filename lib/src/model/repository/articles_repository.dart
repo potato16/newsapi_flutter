@@ -9,26 +9,20 @@ import 'package:newsapi_flutter/src/model/models/headlines_param.dart';
 
 abstract class ArticlesRepository {
   /// Get top headlines news
-  Future<Either<Failure, List<Article>>> getTopHeadlines({required int page});
+  Future<Either<Failure, List<Article>>> getTopHeadlines(
+      HeadLinesParams params);
 
   /// Get custom news from api /everything
-  Future<Either<Failure, List<Article>>> getEverything({
-    required int page,
-    required String query,
-  });
+  Future<Either<Failure, List<Article>>> getEverything(EveryThingParams params);
 }
-
-const int _pageSize = 30;
 
 class ArticlesRepositoryImpl extends ArticlesRepository {
   ArticlesRepositoryImpl({required this.remoteDataSource});
   final ArticlesRemoteDataSource remoteDataSource;
   @override
   Future<Either<Failure, List<Article>>> getEverything(
-      {required int page, required String query}) async {
-    assert(page > 0, 'The page parameter cannot be less than 1.');
+      EveryThingParams params) async {
     try {
-      final params = EveryThingParams(pageSize: _pageSize, q: query);
       final result = await remoteDataSource.fetchEverything(params);
       return Right(result.articles);
     } on ServerException catch (e) {
@@ -44,10 +38,8 @@ class ArticlesRepositoryImpl extends ArticlesRepository {
 
   @override
   Future<Either<Failure, List<Article>>> getTopHeadlines(
-      {required int page}) async {
-    assert(page > 0, 'The page parameter cannot be less than 1.');
+      HeadLinesParams params) async {
     try {
-      final params = HeadLinesParams(pageSize: _pageSize);
       final result = await remoteDataSource.fetchHeadlines(params);
       return Right(result.articles);
     } on ServerException catch (e) {
