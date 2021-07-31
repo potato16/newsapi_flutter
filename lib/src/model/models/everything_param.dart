@@ -17,7 +17,10 @@ class EveryThingParams {
     this.pageSize,
     this.page,
   }) : assert(
-            q != null || qInTitle != null || sources != null || domains != null,
+            (q ?? '').trim().isNotEmpty ||
+                (qInTitle ?? '').trim().isNotEmpty ||
+                (sources ?? '').trim().isNotEmpty ||
+                (domains ?? '').trim().isNotEmpty,
             'Required parameters are missing');
   factory EveryThingParams.fromJson(Map<String, dynamic> json) =>
       _$EveryThingParamsFromJson(json);

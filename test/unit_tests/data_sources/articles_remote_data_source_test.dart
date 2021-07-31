@@ -16,7 +16,7 @@ import 'articles_remote_data_source_test.mocks.dart';
 
 @GenerateMocks([Dio])
 void main() {
-  late Dio dio;
+  late MockDio dio;
   late ArticlesRemoteDataSource dataSource;
   setUp(() {
     dio = MockDio();
@@ -75,19 +75,6 @@ void main() {
       var response = await dataSource.fetchEverything(EveryThingParams(q: 'a'));
       expect(response, isA<ArticlesResponse>());
     });
-    test('fetch headlines should be failed because queryParameters is invalid',
-        () async {
-      final path = '/everything';
-      when(dio.get(path, queryParameters: anyNamed('queryParameters')))
-          .thenAnswer(
-        (_) async => Response(
-            data: json.decode(fixture('error400.json')),
-            requestOptions: RequestOptions(path: path),
-            statusCode: 400),
-      );
-      expect(() async => await dataSource.fetchEverything(EveryThingParams()),
-          throwsAssertionError);
-    });
     test('fetch headlines should be failed because got 500', () async {
       final path = '/everything';
       when(dio.get(path, queryParameters: anyNamed('queryParameters')))
@@ -115,6 +102,50 @@ void main() {
         expect(e.message, isNotNull);
         expect(e.status, isNotNull);
       }
+    });
+  });
+  group('$ArticlesRemoteDataSource  fetchEverything', () {
+    setUp(() {
+      final path = '/everything';
+      when(dio.get(path, queryParameters: anyNamed('queryParameters')))
+          .thenAnswer(
+        (_) async => Response(
+            data: json.decode(fixture('error400.json')),
+            requestOptions: RequestOptions(path: path),
+            statusCode: 400),
+      );
+    });
+    test('fetch headlines should be failed because queryParameters is invalid',
+        () async {
+      expect(() async => await dataSource.fetchEverything(EveryThingParams()),
+          throwsAssertionError);
+    });
+    test('fetch headlines should be failed because q is invalid', () async {
+      expect(
+          () async =>
+              await dataSource.fetchEverything(EveryThingParams(q: '   ')),
+          throwsAssertionError);
+    });
+    test('fetch headlines should be failed because qInTitle is invalid',
+        () async {
+      expect(
+          () async => await dataSource
+              .fetchEverything(EveryThingParams(qInTitle: '   ')),
+          throwsAssertionError);
+    });
+    test('fetch headlines should be failed because sources is invalid',
+        () async {
+      expect(
+          () async => await dataSource
+              .fetchEverything(EveryThingParams(sources: '   ')),
+          throwsAssertionError);
+    });
+    test('fetch headlines should be failed because domains is invalid',
+        () async {
+      expect(
+          () async => await dataSource
+              .fetchEverything(EveryThingParams(domains: '   ')),
+          throwsAssertionError);
     });
   });
 }
