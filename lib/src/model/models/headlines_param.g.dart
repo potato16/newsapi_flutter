@@ -13,7 +13,7 @@ HeadLinesParams _$HeadLinesParamsFromJson(Map<String, dynamic> json) {
     sources: json['sources'] as String?,
     q: json['q'] as String?,
     pageSize: json['pageSize'] as int?,
-    page: json['page'] as int?,
+    page: json['page'] as int,
   );
 }
 

@@ -10,8 +10,8 @@ class HeadLinesParams {
     this.sources,
     this.q,
     this.pageSize,
-    this.page,
-  });
+    required this.page,
+  }) : assert(page > 0, 'The page parameter cannot be less than 1.');
 
   factory HeadLinesParams.fromJson(Map<String, dynamic> json) =>
       _$HeadLinesParamsFromJson(json);
@@ -37,5 +37,5 @@ class HeadLinesParams {
 
   /// Use this to page through the results
   /// if the total results found is greater than the page size.
-  final int? page;
+  final int page;
 }

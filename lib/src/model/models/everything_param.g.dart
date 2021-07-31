@@ -18,7 +18,7 @@ EveryThingParams _$EveryThingParamsFromJson(Map<String, dynamic> json) {
     language: json['language'] as String?,
     sortBy: json['sortBy'] as String?,
     pageSize: json['pageSize'] as int?,
-    page: json['page'] as int?,
+    page: json['page'] as int,
   );
 }
 

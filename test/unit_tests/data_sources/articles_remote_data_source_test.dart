@@ -32,7 +32,7 @@ void main() {
             requestOptions: RequestOptions(path: path),
             statusCode: 200),
       );
-      var response = await dataSource.fetchHeadlines(HeadLinesParams());
+      var response = await dataSource.fetchHeadlines(HeadLinesParams(page: 1));
       expect(response, isA<ArticlesResponse>());
     });
     test('fetch headlines should be failed because got 500', () async {
@@ -40,7 +40,8 @@ void main() {
       when(dio.get(path, queryParameters: anyNamed('queryParameters')))
           .thenAnswer((_) async => Response(
               requestOptions: RequestOptions(path: path), statusCode: 500));
-      expect(() async => await dataSource.fetchHeadlines(HeadLinesParams()),
+      expect(
+          () async => await dataSource.fetchHeadlines(HeadLinesParams(page: 1)),
           throwsA(TypeMatcher<ServerException>()));
     });
     test('fetch headlines should be failed because got 401', () async {
@@ -52,7 +53,7 @@ void main() {
               statusCode: 401));
 
       try {
-        await dataSource.fetchHeadlines(HeadLinesParams());
+        await dataSource.fetchHeadlines(HeadLinesParams(page: 1));
         // should not go to this statement
         expect(0, 1);
       } on ServerException catch (e) {
@@ -60,6 +61,21 @@ void main() {
         expect(e.message, isNotNull);
         expect(e.status, isNotNull);
       }
+    });
+  });
+  group('$ArticlesRemoteDataSource  fetchHeadlines', () {
+    test('fetch headlines should be failed because page is invalid', () async {
+      final path = '/top-headlines';
+      when(dio.get(path, queryParameters: anyNamed('queryParameters')))
+          .thenAnswer(
+        (_) async => Response(
+            data: json.decode(fixture('articles.json')),
+            requestOptions: RequestOptions(path: path),
+            statusCode: 200),
+      );
+      expect(
+          () async => await dataSource.fetchHeadlines(HeadLinesParams(page: 0)),
+          throwsAssertionError);
     });
   });
   group('$ArticlesRemoteDataSource  fetchEverything', () {
@@ -72,7 +88,8 @@ void main() {
             requestOptions: RequestOptions(path: path),
             statusCode: 200),
       );
-      var response = await dataSource.fetchEverything(EveryThingParams(q: 'a'));
+      var response =
+          await dataSource.fetchEverything(EveryThingParams(page: 1, q: 'a'));
       expect(response, isA<ArticlesResponse>());
     });
     test('fetch headlines should be failed because got 500', () async {
@@ -81,8 +98,8 @@ void main() {
           .thenAnswer((_) async => Response(
               requestOptions: RequestOptions(path: path), statusCode: 500));
       expect(
-          () async =>
-              await dataSource.fetchEverything(EveryThingParams(sources: 'c')),
+          () async => await dataSource
+              .fetchEverything(EveryThingParams(page: 1, sources: 'c')),
           throwsA(TypeMatcher<ServerException>()));
     });
     test('fetch headlines should be failed because got 401', () async {
@@ -94,7 +111,8 @@ void main() {
               statusCode: 401));
 
       try {
-        await dataSource.fetchEverything(EveryThingParams(qInTitle: 'a'));
+        await dataSource
+            .fetchEverything(EveryThingParams(page: 1, qInTitle: 'a'));
         // should not go to this statement
         expect(0, 1);
       } on ServerException catch (e) {
@@ -117,34 +135,42 @@ void main() {
     });
     test('fetch headlines should be failed because queryParameters is invalid',
         () async {
-      expect(() async => await dataSource.fetchEverything(EveryThingParams()),
+      expect(
+          () async =>
+              await dataSource.fetchEverything(EveryThingParams(page: 1)),
+          throwsAssertionError);
+    });
+    test('fetch headlines should be failed because page is invalid', () async {
+      expect(
+          () async => await dataSource
+              .fetchEverything(EveryThingParams(page: 0, q: 'a')),
           throwsAssertionError);
     });
     test('fetch headlines should be failed because q is invalid', () async {
       expect(
-          () async =>
-              await dataSource.fetchEverything(EveryThingParams(q: '   ')),
+          () async => await dataSource
+              .fetchEverything(EveryThingParams(page: 1, q: '   ')),
           throwsAssertionError);
     });
     test('fetch headlines should be failed because qInTitle is invalid',
         () async {
       expect(
           () async => await dataSource
-              .fetchEverything(EveryThingParams(qInTitle: '   ')),
+              .fetchEverything(EveryThingParams(page: 1, qInTitle: '   ')),
           throwsAssertionError);
     });
     test('fetch headlines should be failed because sources is invalid',
         () async {
       expect(
           () async => await dataSource
-              .fetchEverything(EveryThingParams(sources: '   ')),
+              .fetchEverything(EveryThingParams(page: 1, sources: '   ')),
           throwsAssertionError);
     });
     test('fetch headlines should be failed because domains is invalid',
         () async {
       expect(
           () async => await dataSource
-              .fetchEverything(EveryThingParams(domains: '   ')),
+              .fetchEverything(EveryThingParams(page: 1, domains: '   ')),
           throwsAssertionError);
     });
   });
