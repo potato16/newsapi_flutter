@@ -1,0 +1,84 @@
+{
+  "status": "ok",
+  "totalResults": 189010,
+  "articles": [
+    {
+      "source": {
+        "id": "wired",
+        "name": "Wired"
+      },
+      "author": "Adam Rogers",
+      "title": "The Olympics Could Be a Covid-19 ‘Super-Evolutionary Event’",
+      "description": "In a warped version of international cooperation, the Games could provide a place for variants of the virus to spread and then return home with athletes.",
+      "url": "https://www.wired.com/story/tokyo-olympics-covid-delta-variant/",
+      "urlToImage": "https://media.wired.com/photos/60f9dcc99c7cd5dcccd9ee20/191:100/w_1280,c_limit/olympics-covid.jpg",
+      "publishedAt": "2021-07-22T21:06:57Z",
+      "content": "As for the Olympic-bound folks already testing positive, McCloskey said that didnt constitute a failure in the system. Quite the oppositeeach one represented the cutting-off of a more infectious time… [+4525 chars]"
+    },
+    {
+      "source": {
+        "id": "wired",
+        "name": "Wired"
+      },
+      "author": "John Learned",
+      "title": "Covid Is Pulling the Plug on Beloved Japanese Arcades",
+      "description": "Once home to vibrant live competitions, gaming centers have been bleeding out since before the pandemic. Lockdowns could leave them KO'd for good.",
+      "url": "https://www.wired.com/story/covid-coronavirus-japanese-arcades/",
+      "urlToImage": "https://media.wired.com/photos/6101c36cc158eb9a50b4437a/191:100/w_1280,c_limit/games_tokyo_1.jpg",
+      "publishedAt": "2021-07-29T11:00:00Z",
+      "content": "On January 16, 2021, Street Fighter III: 3rd Strike tournament legend Tominaga made a rare and critical mistake.\r\nDeep into the final round of a first-to-10 bloodbath against Kuni, a Ryu great whos s… [+4290 chars]"
+    },
+    {
+      "source": {
+        "id": "the-verge",
+        "name": "The Verge"
+      },
+      "author": "Makena Kelly",
+      "title": "Surgeon general calls out platforms over COVID-19 misinformation",
+      "description": "The report calls for an all of society push to address vaccine and coronavirus misinformation, including sweeping policy recommendations for companies like Facebook, Twitter, and YouTube. Surgeon General Vivek Murthy specifically calls on companies to redesig…",
+      "url": "https://www.theverge.com/2021/7/15/22578431/white-house-surgeon-general-facebook-youtube-twitter-covid-19-misinformation-vaccines",
+      "urlToImage": "https://cdn.vox-cdn.com/thumbor/ZGW4BoHoc5rQbmxZcZ9dsNqnDnI=/0x399:5568x3314/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/22719017/1231376251.jpg",
+      "publishedAt": "2021-07-15T14:40:14Z",
+      "content": "Hes suggesting changes to algorithms\r\nPhoto by Caroline Brehman-Pool / Getty Images\r\nOn Thursday, the surgeon general published a new report calling on social media platforms to make new investments … [+2296 chars]"
+    },
+    {
+      "source": {
+        "id": "techcrunch",
+        "name": "TechCrunch"
+      },
+      "author": "Sarah Perez",
+      "title": "Amazon is now selling its own Covid-19 test kits for $39.99 in the U.S.",
+      "description": "Amazon announced this morning it would begin to sell its own brand of Covid-19 at-home tests to Amazon shoppers in the U.S. The test retails for $39.99 on the Amazon.com website and is available to any U.S. customer without a prescription. The Covid-19 PCR co…",
+      "url": "http://techcrunch.com/2021/07/06/amazon-is-now-selling-its-own-covid-19-test-kits-for-39-99-in-the-u-s/",
+      "urlToImage": "https://techcrunch.com/wp-content/uploads/2021/07/amazon-covid-test-kit.png?w=660",
+      "publishedAt": "2021-07-06T15:39:55Z",
+      "content": "Amazon announced this morning it would begin to sell its own brand of Covid-19 at-home tests to Amazon shoppers in the U.S. The test retails for $39.99 on the Amazon.com website and is available to a… [+2445 chars]"
+    },
+    {
+      "source": {
+        "id": "the-verge",
+        "name": "The Verge"
+      },
+      "author": "Jay Peters",
+      "title": "Facebook will require US office employees to be vaccinated",
+      "description": "Facebook will require US employees to be vaccinated against COVID-19 when they return to the office, the company confirmed to The Verge.",
+      "url": "https://www.theverge.com/2021/7/28/22598818/facebook-vaccine-requirement-us-office-employees",
+      "urlToImage": "https://cdn.vox-cdn.com/thumbor/KXAhazZGGRE0A7ta_MEox0_A80k=/0x146:2040x1214/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/11105269/acastro_180522_facebook_0001.jpg",
+      "publishedAt": "2021-07-28T21:13:05Z",
+      "content": "As our offices reopen, we will be requiring anyone coming to work at any of our US campuses to be vaccinated\r\nIllustration by Alex Castro / The Verge\r\nFacebook will require its US employees to be vac… [+1886 chars]"
+    },
+    {
+      "source": {
+        "id": "techcrunch",
+        "name": "TechCrunch"
+      },
+      "author": "Natasha Lomas",
+      "title": "The EU’s COVID-19 ‘digital certificates’ are up and running",
+      "description": "A regulation underpinning a digital certification system for individuals in the European Union to verify their COVID-19 status via a common credential has gone into application today — on schedule. From today, almost all EU Member States are now able to issue…",
+      "url": "http://techcrunch.com/2021/07/01/the-eus-covid-19-digital-certificates-are-up-and-running/",
+      "urlToImage": "https://techcrunch.com/wp-content/uploads/2021/07/P051292-970000.jpg?w=601",
+      "publishedAt": "2021-07-01T15:03:43Z",
+      "content": "A regulation underpinning a digital certification system for individuals in the European Union to verify their COVID-19 status via a common credential has gone into application today — on schedule.\r\n… [+2167 chars]"
+    }
+  ]
+}

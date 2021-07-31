@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'headlines_param.g.dart';
+
+@JsonSerializable()
 class HeadLinesParams {
   HeadLinesParams({
     this.country,
@@ -7,6 +12,10 @@ class HeadLinesParams {
     this.pageSize,
     this.page,
   });
+
+  factory HeadLinesParams.fromJson(Map<String, dynamic> json) =>
+      _$HeadLinesParamsFromJson(json);
+  Map<String, dynamic> toJson() => _$HeadLinesParamsToJson(this);
 
   /// The 2-letter ISO 3166-1 code of the country you want to get headlines for.
   final String? country;

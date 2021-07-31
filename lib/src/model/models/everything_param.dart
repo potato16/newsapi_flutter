@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'everything_param.g.dart';
+
+@JsonSerializable()
 class EveryThingParams {
   EveryThingParams({
     this.q,
@@ -14,6 +19,9 @@ class EveryThingParams {
   }) : assert(
             q != null || qInTitle != null || sources != null || domains != null,
             'Required parameters are missing');
+  factory EveryThingParams.fromJson(Map<String, dynamic> json) =>
+      _$EveryThingParamsFromJson(json);
+  Map<String, dynamic> toJson() => _$EveryThingParamsToJson(this);
 
   /// Keywords or phrases to search for in the article title and body.
   final String? q;
