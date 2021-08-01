@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:newsapi_flutter/src/core/util/enviroment_const.dart';
@@ -8,9 +9,11 @@ import 'package:newsapi_flutter/src/view_model/usecases/get_everything_articles_
 
 /// Common
 final messageProvider = StateProvider<String?>((ref) => null);
+
 final dioProvider = Provider<Dio>((ref) {
+  final baseUrl = 'https://newsapi.org/v2';
   var options = BaseOptions(
-    baseUrl: 'https://newsapi.org/v2',
+    baseUrl: baseUrl,
     connectTimeout: 5000,
     receiveTimeout: 3000,
     headers: {
@@ -18,6 +21,8 @@ final dioProvider = Provider<Dio>((ref) {
     },
   );
   Dio dio = Dio(options);
+  dio.interceptors
+      .add(DioCacheManager(CacheConfig(baseUrl: baseUrl)).interceptor);
 
   return dio;
 });
