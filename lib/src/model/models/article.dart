@@ -3,6 +3,8 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'article.g.dart';
 
+const int maxContentLength = 200;
+
 @JsonSerializable()
 class Article with EquatableMixin {
   Article({

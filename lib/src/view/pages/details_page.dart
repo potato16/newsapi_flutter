@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:newsapi_flutter/src/core/util/asset_path.dart';
 import 'package:newsapi_flutter/src/core/util/helpers.dart';
@@ -8,9 +10,22 @@ class DetailsPage extends StatelessWidget {
   DetailsPage({required this.data});
   // title of the article, use to get article details
   final Article data;
+  void _launchURL(_url) async => await canLaunch(_url)
+      ? await launch(_url)
+      : throw 'Could not launch $_url';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: TextButton.icon(
+        icon: SvgPicture.asset(AssetPath.icOut,
+            fit: BoxFit.contain, height: 16, width: 16),
+        label: Text('Source: ${data.source.name}',
+            style: TextStyle(color: Colors.black)),
+        onPressed: () {
+          _launchURL(data.url);
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SafeArea(
           child: SingleChildScrollView(
         key: ValueKey('details'),
@@ -25,16 +40,13 @@ class DetailsPage extends StatelessWidget {
                   },
                   icon: Icon(Icons.chevron_left)),
               Center(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: FadeInImage.assetNetwork(
-                    key: ValueKey('article_image_${data.urlToImage}'),
-                    fit: BoxFit.cover,
-                    width: 120,
-                    height: 120,
-                    image: data.urlToImage,
-                    placeholder: AssetPath.imgEmpty,
-                  ),
+                child: FadeInImage.assetNetwork(
+                  key: ValueKey('article_image_${data.urlToImage}'),
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: 160,
+                  image: data.urlToImage,
+                  placeholder: AssetPath.imgEmpty,
                 ),
               ),
               SizedBox(height: 16),
@@ -60,7 +72,9 @@ class DetailsPage extends StatelessWidget {
               ),
               SizedBox(height: 40),
               Text(
-                data.content,
+                data.content.length > maxContentLength
+                    ? data.content.substring(0, maxContentLength)
+                    : data.content,
                 style: Theme.of(context).textTheme.headline6,
               ),
             ],
