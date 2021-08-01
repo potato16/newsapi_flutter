@@ -46,3 +46,7 @@ app.*.map.json
 /android/app/release
 
 tags
+config.sh
+rundebug.sh
+.vscode/launch.json
+coverage/**

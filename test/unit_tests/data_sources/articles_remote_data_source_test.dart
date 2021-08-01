@@ -25,8 +25,15 @@ void main() {
   group('$ArticlesRemoteDataSource  fetchHeadlines', () {
     test('fetch headlines should be success', () async {
       final path = '/top-headlines';
-      when(dio.get(path, queryParameters: anyNamed('queryParameters')))
-          .thenAnswer(
+      when(
+        dio.get(
+          any,
+          queryParameters: anyNamed('queryParameters'),
+          options: anyNamed('options'),
+          cancelToken: anyNamed('cancelToken'),
+          onReceiveProgress: anyNamed('onReceiveProgress'),
+        ),
+      ).thenAnswer(
         (_) async => Response(
             data: json.decode(fixture('articles.json')),
             requestOptions: RequestOptions(path: path),
@@ -37,20 +44,30 @@ void main() {
     });
     test('fetch headlines should be failed because got 500', () async {
       final path = '/top-headlines';
-      when(dio.get(path, queryParameters: anyNamed('queryParameters')))
-          .thenAnswer((_) async => Response(
-              requestOptions: RequestOptions(path: path), statusCode: 500));
+      when(dio.get(
+        any,
+        queryParameters: anyNamed('queryParameters'),
+        options: anyNamed('options'),
+        cancelToken: anyNamed('cancelToken'),
+        onReceiveProgress: anyNamed('onReceiveProgress'),
+      )).thenAnswer((_) async => Response(
+          requestOptions: RequestOptions(path: path), statusCode: 500));
       expect(
           () async => await dataSource.fetchHeadlines(HeadLinesParams(page: 1)),
           throwsA(TypeMatcher<ServerException>()));
     });
     test('fetch headlines should be failed because got 401', () async {
       final path = '/top-headlines';
-      when(dio.get(path, queryParameters: anyNamed('queryParameters')))
-          .thenAnswer((_) async => Response(
-              data: json.decode(fixture('error401.json')),
-              requestOptions: RequestOptions(path: path),
-              statusCode: 401));
+      when(dio.get(
+        any,
+        queryParameters: anyNamed('queryParameters'),
+        options: anyNamed('options'),
+        cancelToken: anyNamed('cancelToken'),
+        onReceiveProgress: anyNamed('onReceiveProgress'),
+      )).thenAnswer((_) async => Response(
+          data: json.decode(fixture('error401.json')),
+          requestOptions: RequestOptions(path: path),
+          statusCode: 401));
 
       try {
         await dataSource.fetchHeadlines(HeadLinesParams(page: 1));
@@ -66,8 +83,13 @@ void main() {
   group('$ArticlesRemoteDataSource  fetchHeadlines', () {
     test('fetch headlines should be failed because page is invalid', () async {
       final path = '/top-headlines';
-      when(dio.get(path, queryParameters: anyNamed('queryParameters')))
-          .thenAnswer(
+      when(dio.get(
+        any,
+        queryParameters: anyNamed('queryParameters'),
+        options: anyNamed('options'),
+        cancelToken: anyNamed('cancelToken'),
+        onReceiveProgress: anyNamed('onReceiveProgress'),
+      )).thenAnswer(
         (_) async => Response(
             data: json.decode(fixture('articles.json')),
             requestOptions: RequestOptions(path: path),
@@ -81,8 +103,13 @@ void main() {
   group('$ArticlesRemoteDataSource  fetchEverything', () {
     test('fetch headlines should be success', () async {
       final path = '/everything';
-      when(dio.get(path, queryParameters: anyNamed('queryParameters')))
-          .thenAnswer(
+      when(dio.get(
+        any,
+        queryParameters: anyNamed('queryParameters'),
+        options: anyNamed('options'),
+        cancelToken: anyNamed('cancelToken'),
+        onReceiveProgress: anyNamed('onReceiveProgress'),
+      )).thenAnswer(
         (_) async => Response(
             data: json.decode(fixture('articles.json')),
             requestOptions: RequestOptions(path: path),
@@ -94,9 +121,14 @@ void main() {
     });
     test('fetch headlines should be failed because got 500', () async {
       final path = '/everything';
-      when(dio.get(path, queryParameters: anyNamed('queryParameters')))
-          .thenAnswer((_) async => Response(
-              requestOptions: RequestOptions(path: path), statusCode: 500));
+      when(dio.get(
+        any,
+        queryParameters: anyNamed('queryParameters'),
+        options: anyNamed('options'),
+        cancelToken: anyNamed('cancelToken'),
+        onReceiveProgress: anyNamed('onReceiveProgress'),
+      )).thenAnswer((_) async => Response(
+          requestOptions: RequestOptions(path: path), statusCode: 500));
       expect(
           () async => await dataSource
               .fetchEverything(EveryThingParams(page: 1, sources: 'c')),
@@ -104,11 +136,16 @@ void main() {
     });
     test('fetch headlines should be failed because got 401', () async {
       final path = '/everything';
-      when(dio.get(path, queryParameters: anyNamed('queryParameters')))
-          .thenAnswer((_) async => Response(
-              data: json.decode(fixture('error401.json')),
-              requestOptions: RequestOptions(path: path),
-              statusCode: 401));
+      when(dio.get(
+        any,
+        queryParameters: anyNamed('queryParameters'),
+        options: anyNamed('options'),
+        cancelToken: anyNamed('cancelToken'),
+        onReceiveProgress: anyNamed('onReceiveProgress'),
+      )).thenAnswer((_) async => Response(
+          data: json.decode(fixture('error401.json')),
+          requestOptions: RequestOptions(path: path),
+          statusCode: 401));
 
       try {
         await dataSource
@@ -125,8 +162,13 @@ void main() {
   group('$ArticlesRemoteDataSource  fetchEverything', () {
     setUp(() {
       final path = '/everything';
-      when(dio.get(path, queryParameters: anyNamed('queryParameters')))
-          .thenAnswer(
+      when(dio.get(
+        any,
+        queryParameters: anyNamed('queryParameters'),
+        options: anyNamed('options'),
+        cancelToken: anyNamed('cancelToken'),
+        onReceiveProgress: anyNamed('onReceiveProgress'),
+      )).thenAnswer(
         (_) async => Response(
             data: json.decode(fixture('error400.json')),
             requestOptions: RequestOptions(path: path),

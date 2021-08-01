@@ -8,11 +8,12 @@ part of 'articles_response.dart';
 
 ArticlesResponse _$ArticlesResponseFromJson(Map<String, dynamic> json) {
   return ArticlesResponse(
-    status: json['status'] as String,
-    totalResults: json['totalResults'] as int,
-    articles: (json['articles'] as List<dynamic>)
-        .map((e) => Article.fromJson(e as Map<String, dynamic>))
-        .toList(),
+    status: json['status'] as String? ?? '',
+    totalResults: json['totalResults'] as int? ?? 0,
+    articles: (json['articles'] as List<dynamic>?)
+            ?.map((e) => Article.fromJson(e as Map<String, dynamic>))
+            .toList() ??
+        [],
   );
 }
 

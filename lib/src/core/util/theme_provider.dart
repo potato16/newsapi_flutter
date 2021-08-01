@@ -4,6 +4,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final themeProvider = Provider<ThemeData>((ref) {
   return ThemeData(
       scaffoldBackgroundColor: AppColor.background,
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          backgroundColor: AppColor.secondColor,
+          padding: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(100),
+          ),
+        ),
+      ),
       textTheme: TextTheme(
         headline5: TextStyle(
           fontSize: 24,
@@ -33,7 +42,7 @@ final themeProvider = Provider<ThemeData>((ref) {
         ),
         caption: TextStyle(
             fontSize: 14,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
             height: 16 / 14,
             letterSpacing: 0.1),
       ));
@@ -43,4 +52,5 @@ class AppColor {
   AppColor._();
   static const Color grey = Color(0xFF717368);
   static const Color background = Color(0xFFFAF5ED);
+  static const Color secondColor = Color(0xFFCCF7F3);
 }
