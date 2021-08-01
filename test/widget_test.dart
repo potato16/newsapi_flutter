@@ -11,8 +11,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:newsapi_flutter/src/app.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   testWidgets('Dummy app', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(ProviderScope(child: MyApp()));
+    await tester.runAsync(() async {
+      await tester.pumpWidget(
+        ProviderScope(
+          child: MyApp(),
+          overrides: [],
+        ),
+      );
+    });
   });
 }
