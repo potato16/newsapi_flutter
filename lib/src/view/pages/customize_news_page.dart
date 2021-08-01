@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'package:newsapi_flutter/src/core/navigation/route_information_parser.dart';
 import 'package:newsapi_flutter/src/core/navigation/router_delegate.dart';
@@ -50,40 +51,47 @@ class CustomizeNewsPage extends StatelessWidget {
                 ),
               );
             }),
-            Flexible(child: Consumer(builder: (context, watch, child) {
-              final List<Article>? articles = watch(customizeNewsProvider);
-              if (articles == null) {
-                return Center(
-                  child: CircularProgressIndicator.adaptive(
-                      key: ValueKey('articles_loadingview')),
-                );
-              }
-              if (articles.isEmpty) {
-                return EmptyWidget(key: ValueKey('articles_empty'));
-              }
-              return ListView.builder(
-                key: const ValueKey('articles_listview'),
-                shrinkWrap: true,
-                itemCount: articles.length,
-                itemBuilder: (context, index) {
-                  final item = articles.elementAt(index);
-                  return GestureDetector(
-                      onTap: () {
-                        context
-                            .read(seedRouterDelegateProvider)
-                            .setNewRoutePath(PageConfiguration(
-                                path: SeedPath.details, state: item));
-                      },
-                      child: ArticleTile(
-                        data: item,
-                        key: ValueKey('article_tile_$index'),
-                      ));
-                },
-              );
-            }))
+            Expanded(child: _CustomNewsContentWidget())
           ],
         ),
       ),
     );
+  }
+}
+
+class _CustomNewsContentWidget extends StatelessWidget {
+  const _CustomNewsContentWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer(builder: (context, watch, child) {
+      final PagingController<int, Article> _pagingController =
+          watch(customizeNewsProvider);
+      return PagedListView<int, Article>(
+        key: const ValueKey('articles_listview'),
+        pagingController: _pagingController,
+        builderDelegate: PagedChildBuilderDelegate<Article>(
+          firstPageErrorIndicatorBuilder: (_) => EmptyWidget(),
+          noItemsFoundIndicatorBuilder: (_) => EmptyWidget(),
+          firstPageProgressIndicatorBuilder: (_) =>
+              Center(child: CircularProgressIndicator.adaptive()),
+          newPageProgressIndicatorBuilder: (_) =>
+              Center(child: CircularProgressIndicator.adaptive()),
+          itemBuilder: (context, item, index) {
+            return GestureDetector(
+                onTap: () {
+                  context.read(seedRouterDelegateProvider).setNewRoutePath(
+                      PageConfiguration(path: SeedPath.details, state: item));
+                },
+                child: ArticleTile(
+                  data: item,
+                  key: ValueKey('article_tile_$index'),
+                ));
+          },
+        ),
+      );
+    });
   }
 }

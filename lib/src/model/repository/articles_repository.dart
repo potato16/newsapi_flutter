@@ -26,12 +26,14 @@ class ArticlesRepositoryImpl extends ArticlesRepository {
       final result = await remoteDataSource.fetchEverything(params);
       return Right(result.articles);
     } on ServerException catch (e) {
+      print('here');
       return Left(ServerFailure(
         code: e.code,
         status: e.status,
         message: e.message,
       ));
     } catch (e) {
+      print('nohere');
       return Left(ServerFailure());
     }
   }
