@@ -11,8 +11,11 @@ class ArticlesResponse {
     required this.totalResults,
     required this.articles,
   });
+  @JsonKey(defaultValue: '')
   final String status;
+  @JsonKey(defaultValue: 0)
   final int totalResults;
+  @JsonKey(defaultValue: [])
   final List<Article> articles;
   factory ArticlesResponse.fromJson(Map<String, dynamic> json) =>
       _$ArticlesResponseFromJson(json);

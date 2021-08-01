@@ -52,33 +52,33 @@
       "url": "http://techcrunch.com/2021/07/06/amazon-is-now-selling-its-own-covid-19-test-kits-for-39-99-in-the-u-s/",
       "urlToImage": "https://techcrunch.com/wp-content/uploads/2021/07/amazon-covid-test-kit.png?w=660",
       "publishedAt": "2021-07-06T15:39:55Z",
-      "content": "Amazon announced this morning it would begin to sell its own brand of Covid-19 at-home tests to Amazon shoppers in the U.S. The test retails for $39.99 on the Amazon.com website and is available to a… [+2445 chars]"
+      "content": "Amazon announced this morning it would begin to sell its own brand of Covid-19 at-home tests to Amazon shoppers in the U.S. The test retails for $39.99 on the Amazon.com website and is av"
     },
     {
       "source": {
-        "id": "the-verge",
-        "name": "The Verge"
+        "id": "",
+        "name": ""
       },
-      "author": "Jay Peters",
-      "title": "Facebook will require US office employees to be vaccinated",
-      "description": "Facebook will require US employees to be vaccinated against COVID-19 when they return to the office, the company confirmed to The Verge.",
-      "url": "https://www.theverge.com/2021/7/28/22598818/facebook-vaccine-requirement-us-office-employees",
-      "urlToImage": "https://cdn.vox-cdn.com/thumbor/KXAhazZGGRE0A7ta_MEox0_A80k=/0x146:2040x1214/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/11105269/acastro_180522_facebook_0001.jpg",
-      "publishedAt": "2021-07-28T21:13:05Z",
-      "content": "As our offices reopen, we will be requiring anyone coming to work at any of our US campuses to be vaccinated\r\nIllustration by Alex Castro / The Verge\r\nFacebook will require its US employees to be vac… [+1886 chars]"
+      "author": "",
+      "title": "",
+      "description": "",
+      "url": "",
+      "urlToImage": "",
+      "publishedAt": "",
+      "content": ""
     },
     {
       "source": {
-        "id": "techcrunch",
-        "name": "TechCrunch"
+        "id": null,
+        "name": null
       },
-      "author": "Natasha Lomas",
-      "title": "The EU’s COVID-19 ‘digital certificates’ are up and running",
-      "description": "A regulation underpinning a digital certification system for individuals in the European Union to verify their COVID-19 status via a common credential has gone into application today — on schedule. From today, almost all EU Member States are now able to issue…",
-      "url": "http://techcrunch.com/2021/07/01/the-eus-covid-19-digital-certificates-are-up-and-running/",
-      "urlToImage": "https://techcrunch.com/wp-content/uploads/2021/07/P051292-970000.jpg?w=601",
-      "publishedAt": "2021-07-01T15:03:43Z",
-      "content": "A regulation underpinning a digital certification system for individuals in the European Union to verify their COVID-19 status via a common credential has gone into application today — on schedule.\r\n… [+2167 chars]"
+      "author": null,
+      "title": null,
+      "description": null,
+      "url":null, 
+      "urlToImage": null,
+      "publishedAt": null,
+      "content": null
     }
   ]
 }

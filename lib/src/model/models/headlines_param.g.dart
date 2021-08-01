@@ -17,12 +17,20 @@ HeadLinesParams _$HeadLinesParamsFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$HeadLinesParamsToJson(HeadLinesParams instance) =>
-    <String, dynamic>{
-      'country': instance.country,
-      'category': instance.category,
-      'sources': instance.sources,
-      'q': instance.q,
-      'pageSize': instance.pageSize,
-      'page': instance.page,
-    };
+Map<String, dynamic> _$HeadLinesParamsToJson(HeadLinesParams instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('country', instance.country);
+  writeNotNull('category', instance.category);
+  writeNotNull('sources', instance.sources);
+  writeNotNull('q', instance.q);
+  writeNotNull('pageSize', instance.pageSize);
+  val['page'] = instance.page;
+  return val;
+}

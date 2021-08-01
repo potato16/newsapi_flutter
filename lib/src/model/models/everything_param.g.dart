@@ -22,17 +22,25 @@ EveryThingParams _$EveryThingParamsFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$EveryThingParamsToJson(EveryThingParams instance) =>
-    <String, dynamic>{
-      'q': instance.q,
-      'qInTitle': instance.qInTitle,
-      'sources': instance.sources,
-      'domains': instance.domains,
-      'excludeDomains': instance.excludeDomains,
-      'from': instance.from,
-      'to': instance.to,
-      'language': instance.language,
-      'sortBy': instance.sortBy,
-      'pageSize': instance.pageSize,
-      'page': instance.page,
-    };
+Map<String, dynamic> _$EveryThingParamsToJson(EveryThingParams instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('q', instance.q);
+  writeNotNull('qInTitle', instance.qInTitle);
+  writeNotNull('sources', instance.sources);
+  writeNotNull('domains', instance.domains);
+  writeNotNull('excludeDomains', instance.excludeDomains);
+  writeNotNull('from', instance.from);
+  writeNotNull('to', instance.to);
+  writeNotNull('language', instance.language);
+  writeNotNull('sortBy', instance.sortBy);
+  writeNotNull('pageSize', instance.pageSize);
+  val['page'] = instance.page;
+  return val;
+}
