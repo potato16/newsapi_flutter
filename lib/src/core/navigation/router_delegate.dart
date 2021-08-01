@@ -6,8 +6,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:newsapi_flutter/src/model/models/article.dart';
-import 'package:newsapi_flutter/src/view/pages/customize_news_page.dart';
 import 'package:newsapi_flutter/src/view/pages/details_page.dart';
+import 'package:newsapi_flutter/src/view/pages/home_page.dart';
 
 import 'route_information_parser.dart';
 
@@ -26,7 +26,7 @@ class SeedRouterDelegate extends RouterDelegate<PageConfiguration>
     Widget? widget = Container(child: Text('nothing'));
     print(configuration.path);
     if (configuration.path == seedPagesMap[SeedPath.home]!.path) {
-      widget = CustomizeNewsPage();
+      widget = HomePage();
     } else if (configuration.path == seedPagesMap[SeedPath.details]!.path) {
       widget = DetailsPage(data: configuration.state as Article);
     }
