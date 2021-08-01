@@ -5,6 +5,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:newsapi_flutter/src/model/models/article.dart';
+import 'package:newsapi_flutter/src/view/pages/customize_news_page.dart';
+import 'package:newsapi_flutter/src/view/pages/details_page.dart';
+
 import 'route_information_parser.dart';
 
 final seedRouterDelegateProvider = Provider((ref) => SeedRouterDelegate());
@@ -14,13 +18,18 @@ final backButtonDispatcherProvider = Provider.family(
 class SeedRouterDelegate extends RouterDelegate<PageConfiguration>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<PageConfiguration> {
   SeedRouterDelegate() {
-    _addPage(seedPagesMap[SeedPages.spash]!);
+    _addPage(seedPagesMap[SeedPath.home]!);
   }
   List<Page> _pages = [];
 
   Page? _createPage(PageConfiguration configuration) {
     Widget? widget = Container(child: Text('nothing'));
-
+    print(configuration.path);
+    if (configuration.path == seedPagesMap[SeedPath.home]!.path) {
+      widget = CustomizeNewsPage();
+    } else if (configuration.path == seedPagesMap[SeedPath.details]!.path) {
+      widget = DetailsPage(data: configuration.state as Article);
+    }
     return MaterialPage(
       key: ValueKey(configuration.path + configuration.state.toString()),
       name: configuration.path,
@@ -30,7 +39,7 @@ class SeedRouterDelegate extends RouterDelegate<PageConfiguration>
   }
 
   void _addPage(PageConfiguration configuration) {
-    if (configuration.path == seedPagesMap[SeedPages.home]!.path) {
+    if (configuration.path == seedPagesMap[SeedPath.home]!.path) {
       _pages.clear();
     } else {
       _pages.removeWhere((element) => element.arguments == configuration);
@@ -46,12 +55,12 @@ class SeedRouterDelegate extends RouterDelegate<PageConfiguration>
 
   void _buildPages() {
     final homePageIndex = _pages
-        .lastIndexWhere((p) => p.name == seedPagesMap[SeedPages.home]!.path);
+        .lastIndexWhere((p) => p.name == seedPagesMap[SeedPath.home]!.path);
     if (homePageIndex != -1) {
       _pages = _pages.sublist(homePageIndex);
     }
     if (_pages.isEmpty) {
-      _addToPage(seedPagesMap[SeedPages.home]!);
+      _addToPage(seedPagesMap[SeedPath.home]!);
     }
 
     notifyListeners();

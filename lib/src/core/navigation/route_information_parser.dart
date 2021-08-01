@@ -2,14 +2,20 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+class SeedPath {
+  SeedPath._();
+  static const String spash = '/';
+  static const String home = '/home';
+  static const String details = '/home/details';
+}
+
 final routeInformationParserProvider =
     Provider((ref) => SeedRouteInformationParser());
 
-enum SeedPages { spash, home, details }
-final Map<SeedPages, PageConfiguration> seedPagesMap = {
-  SeedPages.spash: PageConfiguration(path: '/'),
-  SeedPages.home: PageConfiguration(path: '/home'),
-  SeedPages.details: PageConfiguration(path: '/home/details'),
+final Map<String, PageConfiguration> seedPagesMap = {
+  SeedPath.spash: PageConfiguration(path: SeedPath.spash),
+  SeedPath.home: PageConfiguration(path: SeedPath.home),
+  SeedPath.details: PageConfiguration(path: SeedPath.details),
 };
 
 class SeedRouteInformationParser
@@ -19,7 +25,7 @@ class SeedRouteInformationParser
       RouteInformation routeInformation) async {
     final Uri uri = Uri.parse(routeInformation.location ?? '');
     if (uri.pathSegments.isEmpty) {
-      return PageConfiguration(path: '/');
+      return PageConfiguration(path: SeedPath.home);
     }
 
     return PageConfiguration(path: uri.path, state: uri.queryParameters);
