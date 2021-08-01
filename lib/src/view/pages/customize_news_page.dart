@@ -11,6 +11,10 @@ import 'package:newsapi_flutter/src/view/widgets/empty_widget.dart';
 import 'package:newsapi_flutter/src/view_model/providers/customize_news_provider.dart';
 import 'package:newsapi_flutter/src/view_model/providers/keywords_selection_provider.dart';
 
+const String articleListViewKey = 'custom.articleListViewKey';
+const String firstPageIndicatorKey = 'custom.firstPageIndicatorKey';
+const String pageIndicatorKey = 'custom.pageIndicatorKey';
+
 class CustomizeNewsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -34,6 +38,7 @@ class CustomizeNewsPage extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     final keyword = keywords.elementAt(index);
                     return GestureDetector(
+                      key: ValueKey('keyword:$index'),
                       onTap: () {
                         context
                             .read(currentKeywordProvider.notifier)
@@ -70,15 +75,17 @@ class _CustomNewsContentWidget extends StatelessWidget {
       final PagingController<int, Article> _pagingController =
           watch(customizeNewsProvider);
       return PagedListView<int, Article>(
-        key: const ValueKey('articles_listview'),
+        key: const ValueKey(articleListViewKey),
         pagingController: _pagingController,
         builderDelegate: PagedChildBuilderDelegate<Article>(
           firstPageErrorIndicatorBuilder: (_) => EmptyWidget(),
           noItemsFoundIndicatorBuilder: (_) => EmptyWidget(),
           firstPageProgressIndicatorBuilder: (_) =>
-              Center(child: CircularProgressIndicator.adaptive()),
+              CircularProgressIndicator.adaptive(
+                  key: const ValueKey(firstPageIndicatorKey)),
           newPageProgressIndicatorBuilder: (_) =>
-              Center(child: CircularProgressIndicator.adaptive()),
+              CircularProgressIndicator.adaptive(
+                  key: const ValueKey(pageIndicatorKey)),
           itemBuilder: (context, item, index) {
             return GestureDetector(
                 onTap: () {
