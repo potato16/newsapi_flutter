@@ -49,3 +49,4 @@ tags
 config.sh
 rundebug.sh
 .vscode/launch.json
+coverage/**

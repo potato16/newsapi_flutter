@@ -51,7 +51,9 @@ class Article with EquatableMixin {
 @JsonSerializable()
 class SourceArticle with EquatableMixin {
   SourceArticle({this.id, required this.name});
+  @JsonKey(defaultValue: '')
   final String? id;
+  @JsonKey(defaultValue: '')
   final String name;
 
   factory SourceArticle.fromJson(Map<String, dynamic> json) =>

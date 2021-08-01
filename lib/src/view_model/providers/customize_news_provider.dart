@@ -37,7 +37,6 @@ class CustomizeNewsStateNotifier
   final int _pageSize = 20;
 
   Future<void> fetch() async {
-    print('what the fuck');
     final params = EveryThingParams(
       page: state.nextPageKey ?? 1,
       pageSize: _pageSize,
