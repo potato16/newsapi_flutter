@@ -14,9 +14,17 @@ ServerException _$ServerExceptionFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$ServerExceptionToJson(ServerException instance) =>
-    <String, dynamic>{
-      'code': instance.code,
-      'status': instance.status,
-      'message': instance.message,
-    };
+Map<String, dynamic> _$ServerExceptionToJson(ServerException instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('code', instance.code);
+  writeNotNull('status', instance.status);
+  writeNotNull('message', instance.message);
+  return val;
+}

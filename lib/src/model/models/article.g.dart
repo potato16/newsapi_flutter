@@ -37,8 +37,16 @@ SourceArticle _$SourceArticleFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$SourceArticleToJson(SourceArticle instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-    };
+Map<String, dynamic> _$SourceArticleToJson(SourceArticle instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  val['name'] = instance.name;
+  return val;
+}
