@@ -10,7 +10,7 @@ const String timePattern = 'HH:mm:ss';
 String convertDateTimeFormat(String input) {
   DateTime date;
   try {
-    date = DateTime.parse(input).toLocal();
+    date = DateTime.parse(input);
   } catch (e) {
     return '';
   }

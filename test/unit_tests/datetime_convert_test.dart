@@ -5,7 +5,7 @@ import 'package:newsapi_flutter/src/core/util/helpers.dart';
 void main() {
   test('convert 2021-07-22T21:06:57Z to 22 Jul 2021', () {
     final input = '2021-07-22T21:06:57Z';
-    final want = '23 Jul 2021';
+    final want = '22 Jul 2021';
     final got = convertDateTimeFormat(input);
     expect(got, want);
   });

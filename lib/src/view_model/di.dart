@@ -6,6 +6,7 @@ import 'package:newsapi_flutter/src/core/util/enviroment_const.dart';
 import 'package:newsapi_flutter/src/model/data_sources/articles_remote_data_source.dart';
 import 'package:newsapi_flutter/src/model/repository/articles_repository.dart';
 import 'package:newsapi_flutter/src/view_model/usecases/get_everything_articles_usecase.dart';
+import 'package:newsapi_flutter/src/view_model/usecases/get_top_headlines_usecase.dart';
 
 /// Common
 final messageProvider = StateProvider<String?>((ref) => null);
@@ -38,3 +39,5 @@ final articleRepositoryProvider = Provider((ref) => ArticlesRepositoryImpl(
 /// usecases
 final getEverythingUseCaseProvider = Provider(
     (ref) => GetEverythingUseCase(ref.read(articleRepositoryProvider)));
+final getTopHeadlinesUseCaseProvider = Provider(
+    (ref) => GetTopHeadlinesUseCase(ref.read(articleRepositoryProvider)));

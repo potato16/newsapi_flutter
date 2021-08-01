@@ -12,6 +12,7 @@ import 'package:newsapi_flutter/src/core/error/failures.dart';
 import 'package:newsapi_flutter/src/model/models/article.dart';
 import 'package:newsapi_flutter/src/model/models/articles_response.dart';
 import 'package:newsapi_flutter/src/view/pages/customize_news_page.dart';
+import 'package:newsapi_flutter/src/view/widgets/article_list_widget.dart';
 import 'package:newsapi_flutter/src/view/widgets/article_tile.dart';
 import 'package:newsapi_flutter/src/view/widgets/empty_widget.dart';
 import 'package:newsapi_flutter/src/view_model/di.dart';
