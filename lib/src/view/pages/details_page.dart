@@ -6,6 +6,8 @@ import 'package:newsapi_flutter/src/core/util/asset_path.dart';
 import 'package:newsapi_flutter/src/core/util/helpers.dart';
 import 'package:newsapi_flutter/src/model/models/article.dart';
 
+const String sourceButtonKey = 'details.source.button.key';
+
 class DetailsPage extends StatelessWidget {
   DetailsPage({required this.data});
   // title of the article, use to get article details
@@ -17,6 +19,7 @@ class DetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: TextButton.icon(
+        key: const ValueKey(sourceButtonKey),
         icon: SvgPicture.asset(AssetPath.icOut,
             fit: BoxFit.contain, height: 16, width: 16),
         label: Text('Source: ${data.source.name}',
