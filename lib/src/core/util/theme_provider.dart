@@ -33,7 +33,7 @@ final themeProvider = Provider<ThemeData>((ref) {
         ),
         caption: TextStyle(
             fontSize: 14,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
             height: 16 / 14,
             letterSpacing: 0.1),
       ));
@@ -43,4 +43,5 @@ class AppColor {
   AppColor._();
   static const Color grey = Color(0xFF717368);
   static const Color background = Color(0xFFFAF5ED);
+  static const Color secondColor = Color(0xFFCCF7F3);
 }

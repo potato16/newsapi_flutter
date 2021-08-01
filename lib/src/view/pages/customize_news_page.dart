@@ -3,59 +3,86 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:newsapi_flutter/src/core/navigation/route_information_parser.dart';
 import 'package:newsapi_flutter/src/core/navigation/router_delegate.dart';
+import 'package:newsapi_flutter/src/core/util/theme_provider.dart';
 import 'package:newsapi_flutter/src/model/models/article.dart';
 import 'package:newsapi_flutter/src/view/widgets/article_tile.dart';
 import 'package:newsapi_flutter/src/view/widgets/empty_widget.dart';
-import 'package:newsapi_flutter/src/view_model/di.dart';
+import 'package:newsapi_flutter/src/view_model/providers/customize_news_provider.dart';
+import 'package:newsapi_flutter/src/view_model/providers/keywords_selection_provider.dart';
 
-class CustomizeNewsPage extends StatefulWidget {
-  @override
-  _CustomizeNewsPageState createState() => _CustomizeNewsPageState();
-}
-
-class _CustomizeNewsPageState extends State<CustomizeNewsPage> {
-  //Load one time when init widget
-  late Future loadData = context.read(customizeNewsProvider.notifier).fetch();
-
+class CustomizeNewsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: FutureBuilder(
-            future: loadData,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return Consumer(builder: (context, watch, child) {
-                  final List<Article> articles = watch(customizeNewsProvider);
-                  if (articles.isEmpty) {
-                    return EmptyWidget(key: ValueKey('articles_empty'));
-                  }
-                  return ListView.builder(
-                    key: const ValueKey('articles_listview'),
-                    shrinkWrap: true,
-                    itemCount: articles.length,
-                    itemBuilder: (context, index) {
-                      final item = articles.elementAt(index);
-                      return GestureDetector(
-                          onTap: () {
-                            context
-                                .read(seedRouterDelegateProvider)
-                                .setNewRoutePath(PageConfiguration(
-                                    path: SeedPath.details, state: item));
-                          },
-                          child: ArticleTile(
-                            data: item,
-                            key: ValueKey('article_tile_$index'),
-                          ));
-                    },
-                  );
-                });
-              }
-              return Center(
-                child: CircularProgressIndicator.adaptive(
-                    key: ValueKey('articles_loadingview')),
+        child: Column(
+          children: [
+            Consumer(builder: (context, watch, child) {
+              final List<String> keywords = watch(keywordsProvider);
+              final String currentKeyword = watch(currentKeywordProvider);
+              return SizedBox(
+                height: 56,
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                  scrollDirection: Axis.horizontal,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(width: 18);
+                  },
+                  itemCount: keywords.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final keyword = keywords.elementAt(index);
+                    return GestureDetector(
+                      onTap: () {
+                        context
+                            .read(currentKeywordProvider.notifier)
+                            .select(keyword);
+                      },
+                      child: Chip(
+                        backgroundColor: keyword == currentKeyword
+                            ? AppColor.secondColor
+                            : Colors.white,
+                        label: Text(keyword),
+                        labelStyle: Theme.of(context).textTheme.caption,
+                      ),
+                    );
+                  },
+                ),
               );
             }),
+            Flexible(child: Consumer(builder: (context, watch, child) {
+              final List<Article>? articles = watch(customizeNewsProvider);
+              if (articles == null) {
+                return Center(
+                  child: CircularProgressIndicator.adaptive(
+                      key: ValueKey('articles_loadingview')),
+                );
+              }
+              if (articles.isEmpty) {
+                return EmptyWidget(key: ValueKey('articles_empty'));
+              }
+              return ListView.builder(
+                key: const ValueKey('articles_listview'),
+                shrinkWrap: true,
+                itemCount: articles.length,
+                itemBuilder: (context, index) {
+                  final item = articles.elementAt(index);
+                  return GestureDetector(
+                      onTap: () {
+                        context
+                            .read(seedRouterDelegateProvider)
+                            .setNewRoutePath(PageConfiguration(
+                                path: SeedPath.details, state: item));
+                      },
+                      child: ArticleTile(
+                        data: item,
+                        key: ValueKey('article_tile_$index'),
+                      ));
+                },
+              );
+            }))
+          ],
+        ),
       ),
     );
   }
