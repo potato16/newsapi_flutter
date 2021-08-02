@@ -43,13 +43,18 @@ class DetailsPage extends StatelessWidget {
                   },
                   icon: Icon(Icons.chevron_left)),
               Center(
-                child: FadeInImage.assetNetwork(
-                  key: ValueKey('article_image_${data.urlToImage}'),
-                  fit: BoxFit.cover,
+                child: SizedBox(
                   width: double.infinity,
                   height: 160,
-                  image: data.urlToImage,
-                  placeholder: AssetPath.imgEmpty,
+                  child: FadeInImage.assetNetwork(
+                      key: ValueKey('article_image_${data.urlToImage}'),
+                      fit: BoxFit.cover,
+                      image: data.urlToImage,
+                      placeholder: AssetPath.imgEmpty,
+                      imageErrorBuilder: (_, __, ___) => Image.asset(
+                            AssetPath.imgEmpty,
+                            fit: BoxFit.cover,
+                          )),
                 ),
               ),
               SizedBox(height: 16),

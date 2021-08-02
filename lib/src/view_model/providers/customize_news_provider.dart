@@ -3,19 +3,23 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'package:newsapi_flutter/src/model/models/article.dart';
 import 'package:newsapi_flutter/src/model/models/everything_param.dart';
+import 'package:newsapi_flutter/src/model/models/user_preferences.dart';
 import 'package:newsapi_flutter/src/view_model/di.dart';
 import 'package:newsapi_flutter/src/view_model/providers/keywords_selection_provider.dart';
+import 'package:newsapi_flutter/src/view_model/providers/user_preferences_provider.dart';
 import 'package:newsapi_flutter/src/view_model/usecases/get_everything_articles_usecase.dart';
 
-final customizeNewsProvider = StateNotifierProvider<CustomizeNewsStateNotifier,
-    PagingController<int, Article>>((ref) {
+final customizeNewsProvider = StateNotifierProvider.autoDispose<
+    CustomizeNewsStateNotifier, PagingController<int, Article>>((ref) {
   final keyword = ref.watch(currentKeywordProvider);
+  final UserPreferences userPreferences = ref.watch(userPreferencesProvider);
   final PagingController<int, Article> pagingController =
       PagingController(firstPageKey: 1);
   final instance = CustomizeNewsStateNotifier(pagingController,
       getUseCase: ref.read(getEverythingUseCaseProvider),
       keyword: keyword,
-      reader: ref.read);
+      reader: ref.read,
+      userPreferences: userPreferences);
   pagingController.addPageRequestListener((pageKey) {
     instance.fetch();
   });
@@ -27,11 +31,13 @@ class CustomizeNewsStateNotifier
     extends StateNotifier<PagingController<int, Article>> {
   CustomizeNewsStateNotifier(
     PagingController<int, Article> state, {
+    required this.userPreferences,
     required this.getUseCase,
     required this.keyword,
     required this.reader,
   }) : super(state);
   final GetEverythingUseCase getUseCase;
+  final UserPreferences userPreferences;
   final String keyword;
   final Reader reader;
   final int _pageSize = 20;
@@ -40,6 +46,7 @@ class CustomizeNewsStateNotifier
     final params = EveryThingParams(
       page: state.nextPageKey ?? 1,
       pageSize: _pageSize,
+      language: userPreferences.language,
       q: keyword,
     );
 

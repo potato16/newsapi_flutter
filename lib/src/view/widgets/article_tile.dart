@@ -15,13 +15,19 @@ class ArticleTile extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          FadeInImage.assetNetwork(
-            key: ValueKey('article_image_${data.urlToImage}'),
-            fit: BoxFit.cover,
+          SizedBox(
             width: 120,
             height: 120,
-            image: data.urlToImage,
-            placeholder: AssetPath.imgEmpty,
+            child: FadeInImage.assetNetwork(
+              key: ValueKey('article_image_${data.urlToImage}'),
+              fit: BoxFit.cover,
+              image: data.urlToImage,
+              placeholder: AssetPath.imgEmpty,
+              imageErrorBuilder: (_, __, ___) => Image.asset(
+                AssetPath.imgEmpty,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
           SizedBox(width: 16),
           Expanded(
