@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:newsapi_flutter/src/model/models/article.dart';
 import 'package:newsapi_flutter/src/view/pages/details_page.dart';
 import 'package:newsapi_flutter/src/view/pages/home_page.dart';
+import 'package:newsapi_flutter/src/view_model/di.dart';
 
 import 'route_information_parser.dart';
 
@@ -24,7 +25,6 @@ class SeedRouterDelegate extends RouterDelegate<PageConfiguration>
 
   Page? _createPage(PageConfiguration configuration) {
     Widget? widget = Container(child: Text('nothing'));
-    print(configuration.path);
     if (configuration.path == seedPagesMap[SeedPath.home]!.path) {
       widget = HomePage();
     } else if (configuration.path == seedPagesMap[SeedPath.details]!.path) {
@@ -81,21 +81,29 @@ class SeedRouterDelegate extends RouterDelegate<PageConfiguration>
 
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion(
-      value: SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarBrightness: Brightness.light,
-      ),
-      child: Navigator(
-        key: navigatorKey,
-        pages: List.unmodifiable(_pages),
-        onPopPage: (page, result) {
-          if (!page.didPop(result)) {
-            return false;
-          }
-          removeLastPage();
-          return true;
-        },
+    return ProviderListener(
+      provider: messageProvider,
+      onChange: (BuildContext context, StateController<String?> value) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(value.state ?? ''),
+        ));
+      },
+      child: AnnotatedRegion(
+        value: SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarBrightness: Brightness.light,
+        ),
+        child: Navigator(
+          key: navigatorKey,
+          pages: List.unmodifiable(_pages),
+          onPopPage: (page, result) {
+            if (!page.didPop(result)) {
+              return false;
+            }
+            removeLastPage();
+            return true;
+          },
+        ),
       ),
     );
   }
