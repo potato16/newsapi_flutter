@@ -4,7 +4,7 @@
 [![codecov](https://codecov.io/gh/potato16/newsapi_flutter/branch/master/graph/badge.svg?token=ZQSHEO32EB)](https://codecov.io/gh/potato16/newsapi_flutter)
 
 
-![Demo](demo/newsapi_1st_demo.mp4)
+![Demo](https://media0.giphy.com/media/RKDVRyop0vvHRJavMl/giphy.gif)
 ### Project features
 
 - Structure: MVVM
