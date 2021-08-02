@@ -13,6 +13,30 @@ final themeProvider = Provider<ThemeData>((ref) {
           ),
         ),
       ),
+      inputDecorationTheme: InputDecorationTheme(
+        hintStyle:
+            TextStyle(color: AppColor.grey, fontSize: 14, height: 20 / 14),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppColor.grey,
+          ),
+          borderRadius: BorderRadius.circular(25),
+        ),
+        contentPadding: EdgeInsets.fromLTRB(16, 4, 0, 4),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppColor.grey,
+          ),
+          borderRadius: BorderRadius.circular(25),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppColor.grey,
+          ),
+          borderRadius: BorderRadius.circular(25),
+        ),
+        focusColor: AppColor.active,
+      ),
       textTheme: TextTheme(
         headline5: TextStyle(
           fontSize: 24,
@@ -53,4 +77,6 @@ class AppColor {
   static const Color grey = Color(0xFF717368);
   static const Color background = Color(0xFFFAF5ED);
   static const Color secondColor = Color(0xFFCCF7F3);
+  static const Color hintBackground = Color(0xFFEDEFE4);
+  static const Color active = Color(0xFFDBEA8D);
 }

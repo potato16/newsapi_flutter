@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:newsapi_flutter/src/view/pages/customize_news_page.dart';
 import 'package:newsapi_flutter/src/view/pages/headlines_page.dart';
+import 'package:newsapi_flutter/src/view/pages/profile_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -48,6 +49,8 @@ class _HomePageState extends State<HomePage> {
         return TopHeadlinesPage();
       case 1:
         return CustomizeNewsPage();
+      case 2:
+        return ProfilePage();
       default:
         return TopHeadlinesPage();
     }
