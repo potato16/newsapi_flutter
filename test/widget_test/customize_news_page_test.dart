@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:network_image_mock/network_image_mock.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:newsapi_flutter/src/core/error/failures.dart';
 import 'package:newsapi_flutter/src/model/models/article.dart';
@@ -24,21 +25,25 @@ import 'customize_news_page_test.mocks.dart';
 @GenerateMocks([GetEverythingUseCase])
 void main() {
   late MockGetEverythingUseCase mockGetEverythingUseCase;
+  late SharedPreferences sharedPreferences;
   final List<Article> articles =
       ArticlesResponse.fromJson(json.decode(fixture('articles.json'))).articles;
-  setUp(() {
+  setUp(() async {
     mockGetEverythingUseCase = MockGetEverythingUseCase();
+    SharedPreferences.setMockInitialValues({});
+    sharedPreferences = await SharedPreferences.getInstance();
   });
   testWidgets('CustomizeNewsPage should show list articles success',
       (tester) async {
     when(mockGetEverythingUseCase.call(any))
         .thenAnswer((_) async => Right(articles));
-    await mockNetworkImagesFor(() => tester.pumpWidget(ProviderScope(
-            overrides: [
+    await mockNetworkImagesFor(
+        () => tester.pumpWidget(ProviderScope(overrides: [
+              sharedPreferencesProvider.overrideWithProvider(
+                  StateProvider((ref) => sharedPreferences)),
               getEverythingUseCaseProvider
                   .overrideWithValue(mockGetEverythingUseCase)
-            ],
-            child: MaterialApp(home: CustomizeNewsPage()))));
+            ], child: MaterialApp(home: CustomizeNewsPage()))));
 
     /// Loading state
     expect(find.byKey(ValueKey(firstPageIndicatorKey)), findsOneWidget);
@@ -49,67 +54,75 @@ void main() {
     expect(find.byKey(ValueKey(articleListViewKey)), findsOneWidget);
     expect(find.byKey(ValueKey(pageIndicatorKey)), findsNothing);
     expect(find.byType(ArticleTile), findsWidgets);
-  });
+  }, skip: false);
   testWidgets(
-      'CustomizeNewsPage should show empty widget because failed to get data',
-      (tester) async {
-    when(mockGetEverythingUseCase.call(any))
-        .thenAnswer((_) async => Left(ServerFailure()));
-    await mockNetworkImagesFor(() => tester.pumpWidget(ProviderScope(
-            overrides: [
-              getEverythingUseCaseProvider
-                  .overrideWithValue(mockGetEverythingUseCase)
-            ],
-            child: MaterialApp(home: CustomizeNewsPage()))));
-    expect(find.byKey(ValueKey(firstPageIndicatorKey)), findsOneWidget);
-    await mockNetworkImagesFor(() => tester.pump());
-    expect(find.byKey(ValueKey(articleListViewKey)), findsOneWidget);
-    expect(find.byKey(ValueKey(pageIndicatorKey)), findsNothing);
-    expect(find.byType(ArticleTile), findsNothing);
-    expect(find.byType(EmptyWidget), findsOneWidget);
-  });
+    'CustomizeNewsPage should show empty widget because failed to get data',
+    (tester) async {
+      when(mockGetEverythingUseCase.call(any))
+          .thenAnswer((_) async => Left(ServerFailure()));
+      await mockNetworkImagesFor(
+          () => tester.pumpWidget(ProviderScope(overrides: [
+                sharedPreferencesProvider.overrideWithProvider(
+                    StateProvider((ref) => sharedPreferences)),
+                getEverythingUseCaseProvider
+                    .overrideWithValue(mockGetEverythingUseCase)
+              ], child: MaterialApp(home: CustomizeNewsPage()))));
+      expect(find.byKey(ValueKey(firstPageIndicatorKey)), findsOneWidget);
+      await mockNetworkImagesFor(() => tester.pump());
+      expect(find.byKey(ValueKey(articleListViewKey)), findsOneWidget);
+      expect(find.byKey(ValueKey(pageIndicatorKey)), findsNothing);
+      expect(find.byType(ArticleTile), findsNothing);
+      expect(find.byType(EmptyWidget), findsOneWidget);
+    },
+  );
   testWidgets(
-      'CustomizeNewsPage should show empty widget because no items found',
-      (tester) async {
-    when(mockGetEverythingUseCase.call(any)).thenAnswer((_) async => Right([]));
-    await mockNetworkImagesFor(() => tester.pumpWidget(ProviderScope(
-            overrides: [
-              getEverythingUseCaseProvider
-                  .overrideWithValue(mockGetEverythingUseCase)
-            ],
-            child: MaterialApp(home: CustomizeNewsPage()))));
-    expect(find.byKey(ValueKey(firstPageIndicatorKey)), findsOneWidget);
-    await mockNetworkImagesFor(() => tester.pump());
-    expect(find.byKey(ValueKey(articleListViewKey)), findsOneWidget);
-    expect(find.byKey(ValueKey(pageIndicatorKey)), findsNothing);
-    expect(find.byType(ArticleTile), findsNothing);
-    expect(find.byType(EmptyWidget), findsOneWidget);
-  });
-  testWidgets('CustomizeNewsPage should update after change keyword',
-      (tester) async {
-    when(mockGetEverythingUseCase.call(any))
-        .thenAnswer((_) async => Right(articles));
-    await mockNetworkImagesFor(() => tester.pumpWidget(ProviderScope(
-            overrides: [
-              getEverythingUseCaseProvider
-                  .overrideWithValue(mockGetEverythingUseCase)
-            ],
-            child: MaterialApp(home: CustomizeNewsPage()))));
-    expect(find.byKey(ValueKey(firstPageIndicatorKey)), findsOneWidget);
-    expect(find.byKey(ValueKey(pageIndicatorKey)), findsNothing);
-    expect(find.byKey(ValueKey(articleListViewKey)), findsOneWidget);
-    await mockNetworkImagesFor(() => tester.pump());
-    expect(find.byKey(ValueKey(pageIndicatorKey)), findsNothing);
-    expect(find.byType(ArticleTile), findsWidgets);
-    final keywordOneFinder = find.byKey(ValueKey('keyword:1'));
-    expect(keywordOneFinder, findsOneWidget);
-    await mockNetworkImagesFor(() => tester.tap(keywordOneFinder));
-    when(mockGetEverythingUseCase.call(any))
-        .thenAnswer((_) async => Left(ServerFailure()));
-    await mockNetworkImagesFor(() => tester.pump());
-    expect(find.byType(ArticleTile), findsNothing);
-    expect(find.byKey(ValueKey(firstPageIndicatorKey)), findsOneWidget);
-    await mockNetworkImagesFor(() => tester.pumpAndSettle());
-    expect(find.byType(EmptyWidget), findsOneWidget);
-  });
+    'CustomizeNewsPage should show empty widget because no items found',
+    (tester) async {
+      when(mockGetEverythingUseCase.call(any))
+          .thenAnswer((_) async => Right([]));
+      await mockNetworkImagesFor(
+          () => tester.pumpWidget(ProviderScope(overrides: [
+                sharedPreferencesProvider.overrideWithProvider(
+                    StateProvider((ref) => sharedPreferences)),
+                getEverythingUseCaseProvider
+                    .overrideWithValue(mockGetEverythingUseCase)
+              ], child: MaterialApp(home: CustomizeNewsPage()))));
+      expect(find.byKey(ValueKey(firstPageIndicatorKey)), findsOneWidget);
+      await mockNetworkImagesFor(() => tester.pump());
+      expect(find.byKey(ValueKey(articleListViewKey)), findsOneWidget);
+      expect(find.byKey(ValueKey(pageIndicatorKey)), findsNothing);
+      expect(find.byType(ArticleTile), findsNothing);
+      expect(find.byType(EmptyWidget), findsOneWidget);
+    },
+  );
+  testWidgets(
+    'CustomizeNewsPage should update after change keyword',
+    (tester) async {
+      when(mockGetEverythingUseCase.call(any))
+          .thenAnswer((_) async => Right(articles));
+      await mockNetworkImagesFor(
+          () => tester.pumpWidget(ProviderScope(overrides: [
+                sharedPreferencesProvider.overrideWithProvider(
+                    StateProvider((ref) => sharedPreferences)),
+                getEverythingUseCaseProvider
+                    .overrideWithValue(mockGetEverythingUseCase)
+              ], child: MaterialApp(home: CustomizeNewsPage()))));
+      expect(find.byKey(ValueKey(firstPageIndicatorKey)), findsOneWidget);
+      expect(find.byKey(ValueKey(pageIndicatorKey)), findsNothing);
+      expect(find.byKey(ValueKey(articleListViewKey)), findsOneWidget);
+      await mockNetworkImagesFor(() => tester.pump());
+      expect(find.byKey(ValueKey(pageIndicatorKey)), findsNothing);
+      expect(find.byType(ArticleTile), findsWidgets);
+      final keywordOneFinder = find.byKey(ValueKey('keyword:1'));
+      expect(keywordOneFinder, findsOneWidget);
+      await mockNetworkImagesFor(() => tester.tap(keywordOneFinder));
+      when(mockGetEverythingUseCase.call(any))
+          .thenAnswer((_) async => Left(ServerFailure()));
+      await mockNetworkImagesFor(() => tester.pump());
+      expect(find.byType(ArticleTile), findsNothing);
+      expect(find.byKey(ValueKey(firstPageIndicatorKey)), findsOneWidget);
+      await mockNetworkImagesFor(() => tester.pumpAndSettle());
+      expect(find.byType(EmptyWidget), findsOneWidget);
+    },
+  );
 }
