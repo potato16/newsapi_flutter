@@ -85,7 +85,7 @@ class SeedRouterDelegate extends RouterDelegate<PageConfiguration>
       provider: messageProvider,
       onChange: (BuildContext context, StateController<String?> value) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(value.state ?? ''),
+          content: Text(value.state ?? 'Something went wrong!'),
         ));
       },
       child: AnnotatedRegion(
