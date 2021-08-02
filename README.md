@@ -1,16 +1,67 @@
-# newsapi_flutter
+# NewsAPI Flutter App
 
-A new Flutter project.
+![https://github.com/potato16/newsapi_flutter/actions/workflows/flutter.yml/badge.svg](https://github.com/potato16/newsapi_flutter/actions/workflows/flutter.yml/badge.svg)
+[![codecov](https://codecov.io/gh/potato16/newsapi_flutter/branch/master/graph/badge.svg?token=ZQSHEO32EB)](https://codecov.io/gh/potato16/newsapi_flutter)
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+### Project features
 
-A few resources to get you started if this is your first Flutter project:
+- Structure: MVVM
+- Navigation 2.0
+- State management: Riverpod
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### App features
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Top headlines page.
+- Custom news page.
+- Profile page: update user name, language, and country.
+
+### How to run
+
+Get NewsAPI api key from : [https://newsapi.org/](https://newsapi.org/)
+
+- Command line:
+
+```bash
+flutter run --dart-define=APIKEY=Enter your api key here...
+```
+
+- VS Code:
+
+```json
+"configurations": [
+        {
+            "name": "Debug",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart",
+            "args": [
+                "--dart-define=APIKEY=Enter you api here"
+            ]
+        }
+
+    ]
+```
+
+### Design
+
+<img src="design/top-headlines.png" width="200">
+<img src="design/custom_news.png" width="200">
+<img src="design/details.png" width="200">
+<img src="design/profile.png" width="200">
+<img src="design/change-setting.png" width="200">
+
+
+Design inspirations: 
+
+- [https://dribbble.com/shots/14700802-News-Section](https://dribbble.com/shots/14700802-News-Section)
+- [https://dribbble.com/shots/10759980-Bastion-Articles-App](https://dribbble.com/shots/10759980-Bastion-Articles-App)
+- [https://dribbble.com/shots/11707337-NY-Times-Article/attachments/3330893?mode=media](https://dribbble.com/shots/11707337-NY-Times-Article/attachments/3330893?mode=media)
+
+Design resources: 
+
+- [https://www.figma.com/community/file/976668012616887402](https://www.figma.com/community/file/976668012616887402)
+- [https://www.figma.com/community/file/984211592210370699](https://www.figma.com/community/file/984211592210370699)
+
+### Report
+Test Coverage: [Codecov](https://app.codecov.io/gh/potato16/newsapi_flutter)
